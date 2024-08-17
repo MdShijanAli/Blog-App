@@ -1,23 +1,29 @@
 import { Link } from "react-router-dom";
-import image from "../images/git.webp";
 
-function Post() {
+function Post({ post }) {
+  const { image, id, tags, likes, title, isSaved, createdAt } = post;
   return (
     <div className="lws-card">
-      <Link to="/posts/1">
+      <Link to={`/posts/${ id }`}>
         <img src={image} className="lws-card-image" alt="" />
       </Link>
       <div className="p-4">
         <div className="lws-card-header">
-          <p className="lws-publishedDate">2023-05-01</p>
-          <p className="lws-likeCount"><i className="fa-regular fa-thumbs-up"></i>100</p>
+          <p className="lws-publishedDate">{createdAt}</p>
+          <p className="lws-likeCount"><i className="fa-regular fa-thumbs-up"></i>{likes}</p>
         </div>
-        <Link to="/posts/1" className="lws-postTitle"> Top Github Alternatives </Link>
-        <div className="lws-tags"><span>#python,</span> <span>#tech,</span> <span>#git</span></div>
+        <Link to={`/posts/${ id }`} className="lws-postTitle"> {title} </Link>
+        <div className="lws-tags">
+          {
+            tags.length > 0 ? tags.map(tag => <span>#{tag}</span>) : ''
+          }
+        </div>
         {/* <!-- Show this element if post is saved --> */}
-        <div className="flex gap-2 mt-4">
-          <span className="lws-badge"> Saved </span>
-        </div>
+        {
+          isSaved ? <div className="flex gap-2 mt-4">
+            <span className="lws-badge"> Saved </span>
+          </div> : ''
+        }
         {/* <!-- Show this element if post is saved Ends --> */}
       </div>
     </div>
